@@ -30,6 +30,10 @@ app.use('/api/events', eventRoutes);
 
 app.use(errorHandler)
 
+app.get('/', (req, res) => {
+    res.send("This is home route");
+})
+
 app.listen(PORT, async ()=> {
     try{
        await connectDB(DB_URL)
