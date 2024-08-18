@@ -9,7 +9,12 @@ import eventRoutes from "./routes/eventRoutes.mjs";
 import userRoutes from "./routes/userRoutes.mjs";
 import { requestLogger } from "./utils/logger.mjs";
 
-
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  
 
 config();
 
