@@ -9,6 +9,9 @@ import eventRoutes from "./routes/eventRoutes.mjs";
 import userRoutes from "./routes/userRoutes.mjs";
 import { requestLogger } from "./utils/logger.mjs";
 
+import swaggerJSdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+
 config();
 
 const PORT = process.env.PORT || 600
@@ -23,7 +26,23 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
   
+// app.use(cors());
 
+//   api documentation
+const options = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'UMS',
+        version: '1.0.0',
+        description: 'API Documentation',
+      },
+    },
+    apis: ['./routes/*.js', './routes/*.mjs'], // Path to the API docs
+  };
+
+const swaggerSpec=swaggerJSdoc(options)
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
